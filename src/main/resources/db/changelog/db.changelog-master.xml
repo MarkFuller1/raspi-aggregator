@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+<preConditions>
+        <runningAs username="postgres"/>
+    </preConditions>
+
+    <changeSet id="1" author="mark">
+        <createTable tableName="node_payload">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="node_payload_id" type="varchar(50)"/>
+            <column name="ip_address" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="state" type="char(20)"/>
+            <column name="timer_duration_left" type="char(50)"/>
+            <column name="message" type="text"/>
+            <column name="timestamp" type="date">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>
+

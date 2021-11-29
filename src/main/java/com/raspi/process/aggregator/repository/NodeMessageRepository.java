@@ -1,4 +1,9 @@
 package com.raspi.process.aggregator.repository;
 
-public class NodeMessageRepository {
+import com.raspi.process.aggregator.model.NodePayloadEntry;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface NodeMessageRepository extends CrudRepository<NodePayloadEntry, String> {
 }
