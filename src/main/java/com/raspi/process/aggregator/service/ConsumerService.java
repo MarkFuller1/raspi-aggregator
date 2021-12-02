@@ -1,7 +1,7 @@
 package com.raspi.process.aggregator.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.raspi.process.aggregator.Util.NodePayload;
+import com.raspi.process.aggregator.service.model.NodePayload;
 import com.raspi.process.aggregator.model.NodePayloadEntry;
 import com.raspi.process.aggregator.repository.NodeMessageRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -23,7 +23,7 @@ public class ConsumerService {
     @Autowired
     NodeMessageRepository nodeMessageRepository;
 
-    @KafkaListener(topics = "${kafkaTopic}", groupId = "${kafkaGroupId}")
+    @KafkaListener(topics = "${kafkaMessagesTopic}", groupId = "${kafkaGroupId}")
     public void consumer(String message) {
         log.info("consumed:" + message);
         try {
@@ -31,7 +31,8 @@ public class ConsumerService {
             NodePayload parsedMessage = mapper.readValue(message, NodePayload.class);
             nodeMessageRepository.save(convert(parsedMessage));
         } catch (Exception e) {
-            log.error(e.getMessage());
+            e.printStackTrace();
+            log.error("Failed to save data:" + e.getMessage());
         }
     }
 

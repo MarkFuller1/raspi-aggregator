@@ -1,16 +1,19 @@
 package com.raspi.process.aggregator.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.UUID;
 
 @Data
 @Entity
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "node_payload", schema = "aggregator")
 public class NodePayloadEntry {
     @Id

@@ -27,5 +27,10 @@
             </column>
         </createTable>
     </changeSet>
+    <changeSet author="mark" id="2" context="alter table">
+        <sql dbms="postgresql">
+            ALTER TABLE aggregator.node_payload ALTER COLUMN timestamp TYPE timestamp;
+        </sql>
+    </changeSet>
 </databaseChangeLog>
 

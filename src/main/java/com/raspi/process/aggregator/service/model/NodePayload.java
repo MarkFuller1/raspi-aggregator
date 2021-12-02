@@ -1,5 +1,6 @@
-package com.raspi.process.aggregator.Util;
+package com.raspi.process.aggregator.service.model;
 
+import com.raspi.process.aggregator.Util.Utils;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.StringUtils;
