@@ -10,9 +10,12 @@ import java.util.List;
 @Repository
 public interface NodeMessageRepository extends CrudRepository<NodePayloadEntry, String> {
 
-    @Query(value = "select * from aggregator.node_payload where ip_address = ?1 order by timestamp limit 25", nativeQuery = true)
+    @Query(value = "select * from aggregator.node_payload where ip_address = ?1 order by timestamp desc limit 25", nativeQuery = true)
     public List<NodePayloadEntry> getLastFew(String ip);
 
     @Query(value= "select distinct ip_address from aggregator.node_payload", nativeQuery = true)
     public List<String> getNodes();
+
+    @Query(value="select ordered.state from (select * from aggregator.node_payload where ip_address = ?1 order by timestamp desc) as ordered limit 1", nativeQuery = true)
+    public String getLastState(String ip);
 }

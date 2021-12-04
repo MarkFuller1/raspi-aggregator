@@ -1,12 +1,12 @@
 package com.raspi.process.aggregator.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
 import java.util.UUID;
 
 @Data
@@ -17,21 +17,36 @@ import java.util.UUID;
 @Table(name = "node_payload", schema = "aggregator")
 public class NodePayloadEntry {
     @Id
+    @Getter
+    @Setter
     @GeneratedValue
-    UUID node_payload_id;
+    private UUID node_payload_id;
 
+    @Getter
+    @Setter
     @Column(name = "ip_address")
-    String ip_address;
+    private String ip_address;
 
+    @Getter
+    @Setter
     @Column(name = "timer_duration_left")
-    String timerDurationLeft;
+    private String timerDurationLeft;
 
+    @Getter
+    @Setter
     @Column(name = "state")
-    String state;
+    private String state;
 
+    @Getter
+    @Setter
     @Column(name = "message")
-    String message;
+    private String message;
 
+    @Setter
     @Column(name = "timestamp")
-    LocalDateTime timestamp;
+    private LocalDateTime timestamp;
+
+    public String getTimestamp(){
+    return this.timestamp.format(DateTimeFormatter.ofPattern("EEEE, MMM d 'at' hh:mm a"));
+    }
 }
