@@ -42,11 +42,15 @@ public class NodePayloadController {
     public ResponseEntity<Map<String, List<Pair<String, String>>>> getActiveNodes() {
         Map<String, List<Pair<String, String>>> nodeStates = nodePayloadEntryService.getActiveNodes();
 
-        List<String> activeNodes = nodeStates.get("ALIVE").stream().map(Pair::getFirst).collect(Collectors.toList());
-        List<String> lostNodes = nodeStates.get("LOST").stream().map(Pair::getFirst).collect(Collectors.toList());
+        if (nodeStates.containsKey("ALIVE")) {
+            List<String> activeNodes = nodeStates.get("ALIVE").stream().map(Pair::getFirst).collect(Collectors.toList());
+            activeNodes.stream().forEach(node -> nodeMessageRepository.save(new NodePayloadEntry(null, node, "", "ALIVE", "", LocalDateTime.now())));
+        }
+        if (nodeStates.containsKey("LOST")) {
+            List<String> lostNodes = nodeStates.get("LOST").stream().map(Pair::getFirst).collect(Collectors.toList());
+            lostNodes.stream().forEach(node -> nodeMessageRepository.save(new NodePayloadEntry(null, node, "", "LOST", "", LocalDateTime.now())));
+        }
 
-        activeNodes.stream().forEach(node -> nodeMessageRepository.save(new NodePayloadEntry(null, node, "", "ALIVE", "", LocalDateTime.now())));
-        lostNodes.stream().forEach(node -> nodeMessageRepository.save(new NodePayloadEntry(null, node, "", "LOST", "", LocalDateTime.now())));
 
         return new ResponseEntity<Map<String, List<Pair<String, String>>>>(nodeStates, HttpStatus.OK);
     }
